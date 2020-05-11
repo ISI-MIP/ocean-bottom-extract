@@ -8,7 +8,7 @@ Created on Tue Oct 16 15:21:34 2018
 @author: Matthias Buechner (PIK)
 """
 
-Import numpy as np
+import numpy as np
 import xarray as xr
 import glob
 import re
@@ -126,4 +126,3 @@ for i in range(0,num_files):
     # Save ds to netcdf, with new name
     print('    write output...')
     ds.to_netcdf(new_name, format='NETCDF4_CLASSIC',encoding={var: {'dtype': 'float32', 'zlib': True, '_FillValue': 1e+20}})
-    quit()
