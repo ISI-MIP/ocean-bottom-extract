@@ -1,12 +1,14 @@
-##!/usr/bin/env python3
+##!/Usr/bin/env python3
 # -*- coding: utf-8 -*-
+
 """
 Created on Tue Oct 16 15:21:34 2018
 
 @author: ryanheneghan
+@author: Matthias Buechner (PIK)
 """
 
-import numpy as np
+Import numpy as np
 import xarray as xr
 import glob
 import re
@@ -56,7 +58,7 @@ for i in range(0,num_files):
     print('   => ' + new_name)
 
     CURR_NCFILE = xr.open_dataset(curr_file, decode_times=False) # Open current file
-            
+
     # Extract lat, lon, time dimensions
     num_lat = len(CURR_NCFILE['lat'])
     num_lon = len(CURR_NCFILE['lon'])
@@ -71,19 +73,19 @@ for i in range(0,num_files):
     for time in range(0,num_time):
         print('\r    current time step: ' + str(time + 1), end = '')
         VAR = CURR_NCFILE[var][time,:,:,:].values # pull out values for current time slice
-                    
+
         for j in range(0,num_lat): # loop over latitude
             for k in range(0,num_lon): # loop over longitude
                 VAR_SPEC = VAR[:,j,k] # pull out lat, lon slice
                 VAR_UNMASK = VAR_SPEC[~np.isnan(VAR_SPEC)] # pull out only unmasked values
                 if len(VAR_UNMASK) == 0: # if there are no unmasked values
                     VAR_bot[time,j,k] = np.NAN # there are no values in this cell, so bottom is 'nan'
-                if len(VAR_UNMASK) > 0: # if there are unmasked values
-                    VAR_bot[time,j,k] = VAR_UNMASK[len(VAR_UNMASK)-1] # the last one is the bottom
+                    if len(VAR_UNMASK) > 0: # if there are unmasked values
+                        VAR_bot[time,j,k] = VAR_UNMASK[len(VAR_UNMASK)-1] # the last one is the bottom
 
     print('')
 
-    ##### Now, we want to construct the netcdf which will carry the bottom variable        
+    ##### Now, we want to construct the netcdf which will carry the bottom variable
     # Create temporary dataset 'ds', with time, long and lats from original netcdf we're working from
     ds = xr.Dataset({'time': CURR_NCFILE['time'], 'lon': CURR_NCFILE['lon'],'lat':CURR_NCFILE['lat']})
     # Put the bottom values in a dataarray 'da' with corresponding dimensions to 'ds'
@@ -114,7 +116,7 @@ for i in range(0,num_files):
     ds['lat'].attrs['standard_name'] = CURR_NCFILE['lat'].standard_name
     ds['lat'].attrs['units'] = CURR_NCFILE['lat'].units
     ds['lat'].attrs['axis'] = CURR_NCFILE['lat'].axis
-                
+
     ## Fill in attributes of lon, using info from the current netcdf we're using
     ds['lon'].attrs['long_name'] = CURR_NCFILE['lon'].long_name
     ds['lon'].attrs['standard_name'] = CURR_NCFILE['lon'].standard_name
