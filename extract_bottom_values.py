@@ -144,5 +144,6 @@ for i in range(0,num_files):
     ds['lon'].attrs['axis'] = CURR_NCFILE['lon'].axis
 
     # Save ds to netcdf, with new name
+    chunks = (1, 180, 360)
     print('    write output...')
-    ds.to_netcdf(new_name, format='NETCDF4_CLASSIC',encoding={var: {'dtype': 'float32', 'zlib': True, '_FillValue': 1e+20}})
+    ds.to_netcdf(new_name, format='NETCDF4_CLASSIC',encoding={var: {'dtype': 'float32', 'zlib': True, '_FillValue': 1e+20, 'chunksizes': chunks }})
