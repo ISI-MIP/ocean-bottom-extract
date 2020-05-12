@@ -15,8 +15,11 @@ VARS="o2 ph so thetao"
 
 for GCM in $GCMS;do
   for EXP in $EXPS;do
+    # allocate more RAM for piControl jobs
+    [ $EXP == "piControl" ] && LARGEMEM="--mem=16000" || LARGEMEM=""
     for VAR in $VARS;do
-      # since GFDL did not deliver tob, we ectract ocean bottom temperatures from thetao
+      # since GFDL did not deliver tob, we extract ocean bottom temperatures
+      # from thetao and skip other GCMs that have tob
       [ $GCM != "GFDL-ESM4" ] && [ $VAR == "thetao" ] && continue
       echo "submitting $GCM $EXP $VAR"
 
@@ -25,10 +28,11 @@ for GCM in $GCMS;do
         -e "s/_EXP_/$EXP/g" \
         -e "s/_VAR_/$VAR/g" \
 	-e "s/_OVERWRITE_/$OVERWRITE/g" \
+	-e "s/_LARGEMEM_/$LARGEMEM/g" \
         run_extraction.sh > \
         run_extraction.sh.job
       
-      sbatch run_extraction.sh.job && rm run_extraction.sh.job
+      sbatch $LARGEMEM run_extraction.sh.job && rm run_extraction.sh.job
       #exit
     done
   done
