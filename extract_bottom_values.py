@@ -78,11 +78,12 @@ for i in range(0,num_files):
             for k in range(0,num_lon): # loop over longitude
                 VAR_SPEC = VAR[:,j,k] # pull out lat, lon slice
                 VAR_UNMASK = VAR_SPEC[~np.isnan(VAR_SPEC)] # pull out only unmasked values
+
                 if len(VAR_UNMASK) == 0: # if there are no unmasked values
                     VAR_bot[time,j,k] = np.NAN # there are no values in this cell, so bottom is 'nan'
-                    if len(VAR_UNMASK) > 0: # if there are unmasked values
-                        VAR_bot[time,j,k] = VAR_UNMASK[len(VAR_UNMASK)-1] # the last one is the bottom
 
+                if len(VAR_UNMASK) > 0: # if there are unmasked values
+                    VAR_bot[time,j,k] = VAR_UNMASK[len(VAR_UNMASK)-1] # the last one is the bottom
     print('')
 
     ##### Now, we want to construct the netcdf which will carry the bottom variable
