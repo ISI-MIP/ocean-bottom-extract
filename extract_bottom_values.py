@@ -1,4 +1,4 @@
-##!/Usr/bin/env python3
+##!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 """
@@ -17,15 +17,17 @@ from pathlib import Path
 import argparse
 
 parser = argparse.ArgumentParser(description='Extract ocean bottom fields')
-parser.add_argument('-g', '--gcm', dest='gcm', action='store', required=True, help='CMIP6 model')
-parser.add_argument('-e', '--experiment', dest='experiment', action='store', required=True, help='CMIP6 experiment')
-parser.add_argument('-v', '--variable', dest='var', action='store', required=True, help='Variable')
+parser.add_argument('-g', dest='gcm', action='store', required=True, help='CMIP6 model')
+parser.add_argument('-e', dest='experiment', action='store', required=True, help='CMIP6 experiment')
+parser.add_argument('-v', dest='var', action='store', required=True, help='Variable')
+parser.add_argument('-O', dest='ovw', default=False, action='store_true', required=False, help='Overwrite existing files')
 
 options = parser.parse_args()
 
 gcm = options.gcm
 experiment = options.experiment
 var = options.var
+ovw = options.ovw
 
 # base path to files
 root = '/p/tmp/buechner/ISIMIP3b_ocean_remap'
@@ -53,9 +55,18 @@ for i in range(0,num_files):
     # New name
     out_path = root + '/' + gcm + '/' + experiment + '/' + var + '-bottom'
     new_name = out_path + '/' + basename
-    Path(out_path).mkdir(parents=True, exist_ok=True)
 
     print('   => ' + new_name)
+
+    if Path(new_name).is_file():
+        if not ovw:
+            print('    ! file already processed. quit')
+            quit()
+        else:
+            print('    ! overwrite existing file...')
+
+    Path(out_path).mkdir(parents=True, exist_ok=True)
+
 
     CURR_NCFILE = xr.open_dataset(curr_file, decode_times=False) # Open current file
 
