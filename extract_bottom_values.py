@@ -97,7 +97,12 @@ for i in range(0,num_files):
     ds[var].attrs['long_name'] = CURR_NCFILE[var].long_name + ' on Bottom (z_b)'
     ds[var].attrs['standard_name'] = CURR_NCFILE[var].standard_name
     ds[var].attrs['units'] = CURR_NCFILE[var].units
-    ds[var].attrs['comment'] = CURR_NCFILE[var].comment
+
+    try:
+        ds[var].attrs['comment'] = CURR_NCFILE[var].comment
+    except:
+        pass
+
     # backward rotated velocities (uo and vo) got an additional comment in variable meta data
     try:
         ds[var].attrs['comment_isimip'] = CURR_NCFILE[var].comment_isimip
@@ -108,8 +113,12 @@ for i in range(0,num_files):
     ds['time'].attrs['long_name'] = CURR_NCFILE['time'].long_name
     ds['time'].attrs['standard_name'] = CURR_NCFILE['time'].standard_name
     ds['time'].attrs['units'] = CURR_NCFILE['time'].units
-    ds['time'].attrs['bounds'] = CURR_NCFILE['time'].bounds
     ds['time'].attrs['calendar'] = CURR_NCFILE['time'].calendar
+
+    try:
+        ds['time'].attrs['bounds'] = CURR_NCFILE['time'].bounds
+    except:
+        pass
 
     ## Fill in attributes of lat, using info from the current netcdf we're using
     ds['lat'].attrs['long_name'] = CURR_NCFILE['lat'].long_name
