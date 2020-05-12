@@ -67,7 +67,6 @@ for i in range(0,num_files):
 
     Path(out_path).mkdir(parents=True, exist_ok=True)
 
-
     CURR_NCFILE = xr.open_dataset(curr_file, decode_times=False) # Open current file
 
     # Extract lat, lon, time dimensions

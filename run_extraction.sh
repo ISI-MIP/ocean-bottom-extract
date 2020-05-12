@@ -13,7 +13,7 @@ module load anaconda/5.0.0_py3
 conda activate ocean-bottom-env
 
 # debug single combination
-#python3 -u extract_bottom_values.py -g UKESM1-0-LL -e piControl -v ph
+#python3 -u extract_bottom_values.py -g UKESM1-0-LL -e historical -v ph -O
 
 # invoke from wrapper script
-python3 -u extract_bottom_values.py -g _GCM_ -e _EXP_ -v _VAR_
+#python3 -u extract_bottom_values.py -g _GCM_ -e _EXP_ -v _VAR_ _OVERWRITE_
