@@ -12,8 +12,10 @@ module load anaconda/5.0.0_py3
 . /p/system/packages/anaconda/5.0.0_py3/etc/profile.d/conda.sh
 conda activate ocean-bottom-env
 
+PYTHON=/home/buechner/.conda/envs/ocean-bottom-env/bin/python3
+
 # debug single combination
-#python3 -u extract_bottom_values.py -g UKESM1-0-LL -e historical -v ph -O
+#$PYTHON -u extract_bottom_values.py -g UKESM1-0-LL -e historical -v ph -O
 
 # invoke from wrapper script
-python3 -u extract_bottom_values.py -g _GCM_ -e _EXP_ -v _VAR_ _OVERWRITE_
+$PYTHON -u extract_bottom_values.py -g _GCM_ -e _EXP_ -v _VAR_ _OVERWRITE_
