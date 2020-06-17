@@ -6,7 +6,7 @@ OVERWRITE="-O" # or:
 # all ISIMIP3b tier 1 models with MGC module
 GCMS="UKESM1-0-LL MPI-ESM1-2-HR GFDL-ESM4 IPSL-CM6A-LR"
 EXPS="piControl historical ssp126 ssp370 ssp585"
-VARS="o2 ph so thetao"
+VARS="expc o2 ph so thetao"
 
 # single combination
 #GCMS="UKESM1-0-LL"
