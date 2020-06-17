@@ -50,7 +50,7 @@ for i in range(0,num_files):
     print('   <= ' + curr_file)
 
     # Bits of the new name
-    basename = os.path.basename(curr_file).replace(var, var+'-bot_onedeg_')
+    basename = os.path.basename(curr_file).replace(var, var + '-bot')
 
     # New name
     out_path = root + '/' + gcm + '/' + experiment + '/' + var + '-bot'
