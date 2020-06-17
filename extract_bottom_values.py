@@ -130,11 +130,6 @@ for i in range(0,num_files):
     ds['time'].attrs['units'] = CURR_NCFILE['time'].units
     ds['time'].attrs['calendar'] = CURR_NCFILE['time'].calendar
 
-    try:
-        ds['time'].attrs['bounds'] = CURR_NCFILE['time'].bounds
-    except:
-        pass
-
     ## Fill in attributes of lat, using info from the current netcdf we're using
     ds['lat'].attrs['long_name'] = CURR_NCFILE['lat'].long_name
     ds['lat'].attrs['standard_name'] = CURR_NCFILE['lat'].standard_name
