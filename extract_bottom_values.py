@@ -121,7 +121,11 @@ for i in range(0,num_files):
         pass
 
     ## Fill in attributes of time, using info from the current netcdf we're using
-    ds['time'].attrs['long_name'] = CURR_NCFILE['time'].long_name
+    try:
+        ds['time'].attrs['long_name'] = CURR_NCFILE['time'].long_name
+    except:
+        ds['time'].attrs['long_name'] = 'Time axis'
+
     ds['time'].attrs['standard_name'] = CURR_NCFILE['time'].standard_name
     ds['time'].attrs['units'] = CURR_NCFILE['time'].units
     ds['time'].attrs['calendar'] = CURR_NCFILE['time'].calendar
